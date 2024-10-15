@@ -1,51 +1,70 @@
-// src/components/ReportMissing.js
-import React from 'react';
-import childPulledFromRiver from '../images/child pulled from river.jpg';
+import React, { useState } from 'react';
 
-// ReportMissing component for reporting a missing person
 const ReportMissing = () => {
+    const [previewUrl, setPreviewUrl] = useState(null); // Remove the unused `file` state
+
+    const handleFileChange = (e) => {
+        const selectedFile = e.target.files[0];
+
+        // Generate a preview URL for the uploaded image
+        if (selectedFile) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setPreviewUrl(reader.result);
+            };
+            reader.readAsDataURL(selectedFile);
+        } else {
+            setPreviewUrl(null); // Reset preview if no file is selected
+        }
+    };
+
     return (
-        <div id="main-content">
-            <div id="report-form">
-                <h1>Report Missing Person</h1>
-                <div id="alert-box-background">
-                    <h2>Instructions:</h2>
-                    <p>Please fill out the form below to report a missing person. Attach a clear picture of the missing person if available.</p>
-                </div>
-                {/* Form for reporting a missing person */}
-                <form id="missing-person-form" action="submit_report.php" method="POST" encType="multipart/form-data">
-                    {/* Input for person's name */}
-                    <label htmlFor="person-name">Person's Name:</label><br />
-                    <input type="text" id="person-name" name="person-name" required /><br /><br />
+        <div className="report-missing-container">
+            <h1>Report a Missing Person</h1>
+            <form>
+                <label htmlFor="name">Name:</label>
+                <input type="text" id="name" name="name" required />
 
-                    {/* Dropdown for last seen location */}
-                    <label htmlFor="last-seen-location">Last Seen Location:</label><br />
-                    <select id="last-seen-location" name="last-seen-location" required>
-                        <option value="">Select Location</option>
-                        <option value="New York">New York</option>
-                        <option value="Los Angeles">Los Angeles</option>
-                        <option value="Chicago">Chicago</option>
-                        <option value="Houston">Houston</option>
-                        <option value="Phoenix">Phoenix</option>
-                    </select><br /><br />
+                <label htmlFor="age">Age:</label>
+                <input type="number" id="age" name="age" required />
 
-                    {/* Text area for description */}
-                    <label htmlFor="description">Description:</label><br />
-                    <textarea id="description" name="description" rows="4" required></textarea><br /><br />
+                <label htmlFor="last-seen">Last Seen Location:</label>
+                <input type="text" id="last-seen" name="last-seen" required />
 
-                    {/* Input for uploading a picture */}
-                    <label htmlFor="image">Upload Picture:</label><br />
-                    <input type="file" id="image" name="image" accept="image/*" required /><br /><br />
+                <label htmlFor="photo">Upload a Photo:</label>
+                <input
+                    type="file"
+                    id="photo"
+                    name="photo"
+                    accept="image/*"
+                    onChange={handleFileChange}
+                />
 
-                    <img id="image-preview" src="#" alt="Image Preview" style={{ display: 'none', width: '200px', height: 'auto' }} /><br /><br />
+                {/* Image Preview */}
+                {previewUrl && (
+                    <img
+                        id="image-preview"
+                        src={previewUrl}
+                        alt="Uploaded Preview"
+                        style={{ display: 'block', width: '200px', height: 'auto' }}
+                    />
+                )}
 
-                    {/* Submit button for reporting */}
-                    <button type="submit">Submit Report</button>
-                </form>
+                <button type="submit">Submit</button>
+            </form>
+
+            {/* Example static image from public folder */}
+            <div>
+                <h2>Example Image:</h2>
+                <img
+                    src={`${process.env.PUBLIC_URL}/images/child-pulled-from-river.jpg`}
+                    alt="Child Pulled from River"
+                    style={{ width: '200px', height: 'auto' }}
+                />
             </div>
         </div>
     );
 };
 
-export default ReportMissing; // Export ReportMissing component
+export default ReportMissing;
 

@@ -1,6 +1,4 @@
-// src/App.js
-import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'; // Importing routing components
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'; // Import necessary routing components
 import SideNav from './components/SideNav'; // Import SideNav component
 import Home from './components/Home'; // Import Home component
 import Login from './components/Login'; // Import Login component
@@ -13,14 +11,13 @@ const App = () => {
     return (
         <Router>
             <SideNav /> {/* Render side navigation */}
-            <Switch>
-                {/* Define routes for different components */}
-                <Route path="/" exact component={Home} /> {/* Home route */}
-                <Route path="/report-missing" component={ReportMissing} /> {/* Report Missing route */}
-                <Route path="/contact-police" component={ContactPolice} /> {/* Contact Police route */}
-                <Route path="/log-in" component={Login} /> {/* Login route */}
-                <Route path="/sign-up" component={SignUp} /> {/* Sign Up route */}
-            </Switch>
+            <Routes> {/* Define routes for different components */}
+                <Route path="/" element={<Home />} /> {/* Home route */}
+                <Route path="/report-missing" element={<ReportMissing />} /> {/* Report Missing route */}
+                <Route path="/contact-police" element={<ContactPolice />} /> {/* Contact Police route */}
+                <Route path="/log-in" element={<Login />} /> {/* Login route */}
+                <Route path="/sign-up" element={<SignUp />} /> {/* Sign Up route */}
+            </Routes>
         </Router>
     );
 };
