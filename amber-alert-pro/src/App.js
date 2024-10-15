@@ -1,36 +1,29 @@
 // src/App.js
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import NavBar from './components/NavBar';
-import Home from './pages/Home';
-import ReportMissing from './pages/ReportMissing';
-import ContactPolice from './pages/ContactPolice';
-import ViewMissing from './pages/ViewMissing';
-import ContactUs from './pages/ContactUs';
-import SignUp from './pages/SignUp';
-import Login from './pages/Login';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'; // Importing routing components
+import SideNav from './components/SideNav'; // Import SideNav component
+import Home from './components/Home'; // Import Home component
+import Login from './components/Login'; // Import Login component
+import ReportMissing from './components/ReportMissing'; // Import ReportMissing component
+import SignUp from './components/SignUp'; // Import SignUp component
+import ContactPolice from './components/ContactPolice'; // Import ContactPolice component
 
-function App() {
-  return (
-    <Router>
-      <div className="flex flex-col min-h-screen">
-        <NavBar />
-        <main className="flex-grow">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/report-missing" element={<ReportMissing />} />
-            <Route path="/contact-police" element={<ContactPolice />} />
-            <Route path="/view-missing" element={<ViewMissing />} />
-            <Route path="/contact-us" element={<ContactUs />} />
-            <Route path="/signup" element={<SignUp />} />
-            <Route path="/login" element={<Login />} />
-          </Routes>
-        </main>
-        {/* <Footer /> Uncomment if you add a Footer component */}
-      </div>
-    </Router>
-  );
-}
+// Main App component that sets up routing for the application
+const App = () => {
+    return (
+        <Router>
+            <SideNav /> {/* Render side navigation */}
+            <Switch>
+                {/* Define routes for different components */}
+                <Route path="/" exact component={Home} /> {/* Home route */}
+                <Route path="/report-missing" component={ReportMissing} /> {/* Report Missing route */}
+                <Route path="/contact-police" component={ContactPolice} /> {/* Contact Police route */}
+                <Route path="/log-in" component={Login} /> {/* Login route */}
+                <Route path="/sign-up" component={SignUp} /> {/* Sign Up route */}
+            </Switch>
+        </Router>
+    );
+};
 
-export default App;
+export default App; // Export App component
 
