@@ -1,0 +1,24 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "The backend side of the project",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ntswakikekana/Amber-alert-PRO.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ntswakikekana/Amber-alert-PRO/issues"
+  },
+  "homepage": "https://github.com/ntswakikekana/Amber-alert-PRO#readme",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "mongoose": "^8.7.1"
+  }
+}
