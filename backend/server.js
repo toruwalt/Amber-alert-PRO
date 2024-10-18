@@ -1,10 +1,13 @@
 // backend/server.js
 import express from 'express';
+import dotenv from 'dotenv';
+
 import connectDB from './config/db.js'; // Import the connectDB function
 import Alert from './models/alertModel.js'; // Import the Alert model
 import User from './models/userModel.js'; // Import the Alert model
 import router from './routes/userRoutes.js'; // Import the user routes
 
+dotenv.config();
 const app = express();
 
 

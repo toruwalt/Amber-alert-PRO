@@ -20,12 +20,14 @@
   },
   "homepage": "https://github.com/ntswakikekana/Amber-alert-PRO#readme",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "dotenv": "^16.4.5",
+    "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.7.1"
   },
   "devDependencies": {
+    "bcrypt": "^5.1.1",
     "express": "^4.21.1",
-    "nodemon": "^3.1.7",
-    "bcrypt": "^5.1.0"
+    "nodemon": "^3.1.7"
   }
 }
