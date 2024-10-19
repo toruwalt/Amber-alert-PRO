@@ -21,11 +21,12 @@
   "homepage": "https://github.com/ntswakikekana/Amber-alert-PRO#readme",
   "dependencies": {
     "dotenv": "^16.4.5",
-    "mongoose": "^8.7.1"
+    "mongoose": "^8.7.1",
+    "validator": "^13.12.0"
   },
   "devDependencies": {
+    "bcrypt": "^5.1.0",
     "express": "^4.21.1",
-    "nodemon": "^3.1.7",
-    "bcrypt": "^5.1.0"
+    "nodemon": "^3.1.7"
   }
 }

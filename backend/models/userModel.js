@@ -1,12 +1,27 @@
 import { clear } from 'console';
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
+import validator from 'validator';
+
+
 const { Schema } = mongoose;
+const isEmail = validator.isEmail;
 
 //Schema for the User collection
 const userSchema = new Schema({
-    username: {type: String, required: true, unique: true},
-    email: {type: String, required: true, unique: true},
+    username: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      trim: true,
+      lowercase: true,
+      validate: [isEmail, 'Please enter a valid email'],
+    },
     password: {type: String, required: true},
     firstname: {type: String, required: false},
     lastname: {type: String, required: false},
@@ -24,6 +39,7 @@ userSchema.pre('save', async function(next) {
     this.password = await bcrypt.hash(this.password, salt);
     next();
   });
+
 
 //Creates a model from User Schema
 const User = mongoose.model('User', userSchema);

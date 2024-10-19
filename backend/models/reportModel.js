@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
+import User from '../models/userModel.js'
 
-const alertSchema = new mongoose.Schema({
+const reportSchema = new mongoose.Schema({
   name: { type: String, required: true },
   age: { type: Number, required: true },
   description: { type: String, required: true },
@@ -12,11 +13,11 @@ const alertSchema = new mongoose.Schema({
     enum: ['active', 'resolved'] 
   },
   imageUrl: { type: String },
-  createdBy: { type: String, required: true },
-  updatedAt: { type: Date, default: Date.now }
+  createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  updatedAt: { type: Date, default: Date.now },
 }, { timestamps: true });
 
 
-const Alert = mongoose.model('Alert', alertSchema);
+const Report = mongoose.model('Report', reportSchema);
 
-export default Alert;
+export default Report;

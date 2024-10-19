@@ -1,19 +1,36 @@
-// backend/config/db.js
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 
 dotenv.config(); // Load environment variables from .env file
 
 const connectDB = async () => {
-    try {
-        const conn = await mongoose.connect(process.env.MONGODB_URI);
+  const options = { serverSelectionTimeoutMS: 5000 };
 
-        console.log(`MongoDB Connected: ${conn.connection.host}`);
-    } catch (error) {
-        console.error(`Error: ${error.message}`);
-        process.exit(1); // Exit the process with failure
-    }
-};
+  mongoose.connect(process.env.MONGODB_URI, options)
+    .catch((err) => {
+      console.error(` Error connecting to MongoDB:
+        Please check your MongoDB URI in the .env file and ensure that the MongoDB server is running.
+      `);
+      process.exit(1);
+    });
 
-export default connectDB; // Export the connectDB function
+  // Connection event handlers
+  mongoose.connection.on('connected', () => {
+    console.log('Connection to MongoDB established successfully');
+  });
+
+  mongoose.connection.on('disconnected', () => {
+    console.log('Mongoose disconnected, trying to reconnect...');
+  });
+
+  mongoose.connection.on('reconnected', () => {
+    console.log('Mongoose reconnected successfully');
+  });
+
+  mongoose.connection.on('error', (err) => {
+    console.error(`Mongoose connection error: ${err}`);
+  });
+}
+
+export default connectDB;
 
