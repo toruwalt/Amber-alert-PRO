@@ -1,10 +1,13 @@
 // backend/server.js
 import express from 'express';
+import dotenv from 'dotenv';
+
 import connectDB from './config/db.js'; // Import the connectDB function
 import Report from './models/reportModel.js'; // Import the Report model
 import User from './models/userModel.js'; // Import the Report model
 import router from './routes/userRoutes.js'; // Import the user routes
 
+dotenv.config();
 const app = express();
 
 
