@@ -1,3 +1,4 @@
+import bcrypt from 'bcrypt';
 import User from '../models/userModel.js';
 import { generateToken, verifyToken } from '../middleware/authMiddleware.js';
 
@@ -41,3 +42,33 @@ export async function createUser(req, res) {
     });
   }
 };
+
+
+// POST /api/login - Authenticate a user and return a JWT
+export async function loginUser(req, res) {
+  const { phone, password } = req.body;
+
+  try {
+    // Find the user by username
+    const user = await User.findOne({ phone });
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Compare the entered password with the stored hashed password
+    const isPasswordMatch = await bcrypt.compare(password, user.password);
+    if (!isPasswordMatch) {
+      return res.status(401).json({ message: 'Invalid credentials' });
+    }
+
+    // Generate JWT if password matches
+    const token = generateToken(user._id);
+
+    res.status(200).json({
+      message: 'Login successful',
+      token,
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Error logging in', error: error.message });
+  }
+}
