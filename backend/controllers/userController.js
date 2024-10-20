@@ -7,7 +7,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 
-// POST /api/users - Create a new user
+// POST /users - Create a new user
 export async function createUser(req, res) {
   try {
     console.log(req.body);
@@ -44,12 +44,12 @@ export async function createUser(req, res) {
 };
 
 
-// POST /api/login - Authenticate a user and return a JWT
+// POST /login - Authenticate a user and return a JWT
 export async function loginUser(req, res) {
   const { phone, password } = req.body;
 
   try {
-    // Find the user by username
+    // Find the user by phone number
     const user = await User.findOne({ phone });
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
@@ -71,4 +71,17 @@ export async function loginUser(req, res) {
   } catch (error) {
     res.status(500).json({ message: 'Error logging in', error: error.message });
   }
-}
+};
+
+// GET /users/:id - Gets a user
+export async function getUser(req, res) {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ message: 'Error retrieving user', error: error.message });
+  }
+};
