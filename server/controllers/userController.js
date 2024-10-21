@@ -11,7 +11,7 @@ export async function createUser(req, res) {
   try {
     console.log(req.body);
     const newUser = new User(req.body); // Assuming req.body has the user data
-    
+
     const token = generateToken(newUser._id);
     await newUser.save();
 
@@ -29,7 +29,7 @@ export async function createUser(req, res) {
       const field = Object.keys(error.keyValue)[0];
       const value = error.keyValue[field];
 
-      const errMsg = `The ${field} "${value}" is already in use. Please choose another ${field}.`;
+      const errMsg = `The ${field} <${value}> is already in use. Please choose another ${field}.`;
       return res.status(400).json({ 
         message: 'Error creating user',
         error: errMsg 

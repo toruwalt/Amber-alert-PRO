@@ -13,7 +13,11 @@ const reportSchema = new mongoose.Schema({
     enum: ['active', 'resolved'] 
   },
   imageUrl: { type: String },
-  createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  createdBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
+  },
   updatedAt: { type: Date, default: Date.now },
 }, { timestamps: true });
 
