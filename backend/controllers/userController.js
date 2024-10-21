@@ -85,3 +85,34 @@ export async function getUser(req, res) {
     res.status(500).json({ message: 'Error retrieving user', error: error.message });
   }
 };
+
+// DELETE /api/users/:id - Delete user by ID
+export async function deleteUser (req, res) {
+  try {
+    const { password } = req.body;
+
+    // Find the user by ID
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Check if the password is provided
+    if (!password) {
+      return res.status(400).json({ message: 'Password is required to delete the account' });
+    }
+
+    // Compare the provided password with the stored hashed password
+    const isPasswordMatch = await bcrypt.compare(password, user.password);
+    if (!isPasswordMatch) {
+      return res.status(401).json({ message: 'Incorrect password' });
+    }
+
+    // If password is correct, delete the user
+    await User.findByIdAndDelete(req.params.id);
+    res.json({ message: 'User deleted successfully' });
+    
+  } catch (error) {
+    res.status(500).json({ message: 'Error deleting user', error });
+  }
+};
